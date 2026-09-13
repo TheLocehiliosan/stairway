@@ -1,0 +1,18 @@
+[Unit]
+Description=Stairway to Ascension scoreboard proxy
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=stairway
+Group=stairway
+WorkingDirectory=/opt/stairway-proxy
+Environment=ALLOWED_ORIGINS=https://stairway.locehilios.com,http://localhost:5173,http://127.0.0.1:5173
+Environment=SCOREBOARD_BASE=https://nethackscoreboard.org
+ExecStart=/opt/stairway-proxy/.venv/bin/uvicorn app:app --host 127.0.0.1 --port 8998
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

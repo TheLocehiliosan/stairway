@@ -1,0 +1,10 @@
+# TLS termination on port 8999, forwarding to the app on localhost:8998.
+# Install Caddy on AlmaLinux 9, then:
+#   sudo cp Caddyfile.example /etc/caddy/Caddyfile
+#   sudo systemctl enable --now caddy
+#
+# GitHub Pages (HTTPS) requires the proxy to speak HTTPS too.
+
+https://stairway-proxy.locehilios.com:8999 {
+	reverse_proxy 127.0.0.1:8998
+}
