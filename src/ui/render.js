@@ -122,7 +122,7 @@ export function renderComboGrid(combos) {
         </div>
       </div>
       <div class="combo-grid-wrap">
-        <table class="combo-grid">
+        <table class="combo-grid" aria-label="Role, race, and alignment combo progress">
           <thead>
             <tr>
               <th></th>
@@ -132,6 +132,7 @@ export function renderComboGrid(combos) {
           <tbody>${body}</tbody>
         </table>
       </div>
+      <p class="combo-grid-scroll-hint">Swipe horizontally to see all roles</p>
     </section>
   `;
 }

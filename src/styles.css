@@ -32,9 +32,22 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  padding:
+    env(safe-area-inset-top, 0)
+    env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0)
+    env(safe-area-inset-left, 0);
 }
 
 a {
@@ -65,6 +78,9 @@ code {
 
 #app {
   min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -72,8 +88,12 @@ code {
 .site-header,
 .main-content,
 .site-footer {
-  width: min(1100px, calc(100% - 2rem));
+  width: 100%;
+  max-width: 1100px;
   margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-sizing: border-box;
 }
 
 .site-header {
@@ -100,7 +120,8 @@ code {
 }
 
 .player-form input {
-  min-width: 220px;
+  flex: 1;
+  min-width: 0;
   padding: 0.65rem 0.85rem;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -111,12 +132,14 @@ code {
 .player-form button,
 .btn-primary {
   padding: 0.65rem 1rem;
+  min-height: 44px;
   border: 0;
   border-radius: 10px;
   background: var(--accent);
   color: #0b1020;
   font-weight: 600;
   cursor: pointer;
+  touch-action: manipulation;
 }
 
 .player-form button:hover,
@@ -151,6 +174,7 @@ code {
   display: grid;
   gap: 1rem;
   padding-bottom: 2rem;
+  min-width: 0;
 }
 
 .card {
@@ -159,6 +183,12 @@ code {
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 1.25rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.detail-section {
+  overflow: hidden;
 }
 
 .hero-stat {
@@ -189,8 +219,21 @@ code {
 
 .summary-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+
+@media (min-width: 600px) {
+  .summary-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .summary-row {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 .summary-card h3,
@@ -382,11 +425,24 @@ a.chip.missing:hover {
 }
 
 .combo-grid-wrap {
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.combo-grid-scroll-hint {
+  display: none;
+  margin: 0.35rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-align: right;
 }
 
 .combo-grid {
-  width: 100%;
+  width: max-content;
+  min-width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
 }
@@ -502,7 +558,29 @@ a.chip.missing:hover {
   margin-top: 0.35rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .site-header,
+  .main-content,
+  .site-footer {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .site-header {
+    padding-top: 1rem;
+  }
+
+  .header-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .site-title {
+    font-size: 1.35rem;
+    line-height: 1.2;
+  }
+
   .player-form {
     width: 100%;
   }
@@ -510,5 +588,98 @@ a.chip.missing:hover {
   .player-form input {
     flex: 1;
     min-width: 0;
+    font-size: 16px;
+  }
+
+  .player-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .main-content {
+    gap: 0.75rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  .hero-stat {
+    padding: 1.25rem 1rem;
+  }
+
+  .hero-value {
+    font-size: clamp(2.5rem, 14vw, 3.5rem);
+  }
+
+  .summary-card h3 {
+    font-size: 0.85rem;
+  }
+
+  .progress-meta {
+    font-size: 0.85rem;
+  }
+
+  .goal-header {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .goal-header .btn-compact {
+    align-self: flex-start;
+  }
+
+  .goal-label {
+    font-size: 1.05rem;
+  }
+
+  .combo-grid-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .combo-legend {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .combo-grid {
+    font-size: 0.78rem;
+  }
+
+  .combo-grid th,
+  .combo-grid td {
+    padding: 0.35rem 0.3rem;
+  }
+
+  .combo-grid tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .combo-grid-scroll-hint {
+    display: block;
+  }
+
+  .chip {
+    padding: 0.35rem 0.6rem;
+    min-height: 32px;
+  }
+
+  .site-footer {
+    font-size: 0.85rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .player-form input {
+    min-width: 12rem;
   }
 }
