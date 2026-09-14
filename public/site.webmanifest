@@ -1,0 +1,21 @@
+{
+  "name": "Stairway to Ascension",
+  "short_name": "Stairway",
+  "description": "Track NetHack ascension progress and get a random goal for your next game.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f1117",
+  "theme_color": "#0f1117",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
